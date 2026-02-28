@@ -1,13 +1,22 @@
 import axios from "axios";
 
 const resolveApiBaseUrl = () => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL as string;
+  const envUrl =
+    (import.meta.env.VITE_API_URL as string | undefined) ||
+    (import.meta.env.VITE_API_BASE_URL as string | undefined);
+  if (envUrl) {
+    return envUrl.replace(/\/+$/, "");
   }
 
   if (typeof window !== "undefined") {
     const { protocol, hostname } = window.location;
-    return `${protocol}//${hostname}:8000`;
+    // Local dev fallback only.
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return `${protocol}//${hostname}:8000`;
+    }
+
+    // Hosted fallback: assume same-origin proxy/rewrite if env var is missing.
+    return `${window.location.origin}/api`;
   }
 
   return "http://127.0.0.1:8000";
