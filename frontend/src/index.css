@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #040812;
+  --bg-secondary: rgba(10, 18, 34, 0.82);
+  --bg-tertiary: rgba(17, 28, 52, 0.7);
+  --text-primary: #e6edf9;
+  --text-muted: #a3b2cc;
+  --border-soft: rgba(148, 163, 184, 0.2);
+}
+
+.light {
+  --bg-primary: #eef4ff;
+  --bg-secondary: rgba(255, 255, 255, 0.82);
+  --bg-tertiary: rgba(239, 246, 255, 0.9);
+  --text-primary: #111827;
+  --text-muted: #4b5563;
+  --border-soft: rgba(148, 163, 184, 0.3);
+}
+
+* {
+  font-family: "Manrope", sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  @apply antialiased;
+  background: radial-gradient(circle at 10% 0%, rgba(20, 116, 254, 0.2), transparent 38%),
+    radial-gradient(circle at 90% 0%, rgba(57, 217, 138, 0.18), transparent 38%),
+    linear-gradient(160deg, #030712 0%, #081329 45%, #071925 100%);
+  background-size: 180% 180%;
+  animation: gradientShift 16s ease infinite;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.light body {
+  background: radial-gradient(circle at 10% 0%, rgba(16, 116, 254, 0.18), transparent 40%),
+    radial-gradient(circle at 90% 0%, rgba(57, 217, 138, 0.14), transparent 38%), #eef4ff;
+}
+
+.glass {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-soft);
+}
+
+.surface {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-soft);
+}
+
+.input-field {
+  width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border-soft);
+  background: rgba(2, 8, 23, 0.45);
+  padding: 0.78rem 0.9rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.light .input-field {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.input-field:focus {
+  border-color: rgba(16, 116, 254, 0.65);
+  box-shadow: 0 0 0 3px rgba(16, 116, 254, 0.18);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.45);
+  border-radius: 999px;
+}
