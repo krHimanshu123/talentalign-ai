@@ -9,8 +9,8 @@ const Badge = ({ label, tone }: { label: string; tone: "good" | "bad" }) => (
   <span
     className={`rounded-full border px-3 py-1 text-xs font-semibold ${
       tone === "good"
-        ? "border-emerald-400/35 bg-emerald-500/15 text-emerald-700 dark:text-emerald-200"
-        : "border-rose-400/35 bg-rose-500/15 text-rose-700 dark:text-rose-200"
+        ? "border-emerald-400/70 bg-emerald-100 text-emerald-800 dark:border-emerald-400/35 dark:bg-emerald-500/15 dark:text-emerald-200"
+        : "border-rose-400/70 bg-rose-100 text-rose-800 dark:border-rose-400/35 dark:bg-rose-500/15 dark:text-rose-200"
     }`}
   >
     {label}

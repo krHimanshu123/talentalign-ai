@@ -126,25 +126,25 @@ export default function Result() {
             <ShareReportModal analysisId={result.analysis_id} />
             <button
               onClick={copyRecruiterSummary}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300/80 bg-white px-3 py-2 text-sm font-semibold shadow-sm dark:border-white/20 dark:bg-white/10"
             >
               Copy Recruiter Summary
             </button>
             <button
               onClick={copySuggestions}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300/80 bg-white px-3 py-2 text-sm font-semibold shadow-sm dark:border-white/20 dark:bg-white/10"
             >
               Copy Suggestions
             </button>
             <button
               onClick={exportReport}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300/80 bg-white px-3 py-2 text-sm font-semibold shadow-sm dark:border-white/20 dark:bg-white/10"
             >
               <Download className="h-4 w-4" /> Export Report
             </button>
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300/80 bg-white px-3 py-2 text-sm font-semibold shadow-sm dark:border-white/20 dark:bg-white/10"
             >
               Print
             </button>

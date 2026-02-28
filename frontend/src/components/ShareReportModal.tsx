@@ -37,7 +37,7 @@ export default function ShareReportModal({ analysisId }: Props) {
 
   return (
     <>
-      <button className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold" onClick={() => setOpen(true)}>
+      <button className="inline-flex items-center gap-2 rounded-xl border border-slate-300/80 bg-white px-3 py-2 text-sm font-semibold shadow-sm dark:border-white/20 dark:bg-white/10" onClick={() => setOpen(true)}>
         Share Report
       </button>
       {mounted &&
