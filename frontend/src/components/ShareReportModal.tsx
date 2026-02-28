@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { createPortal } from "react-dom";
 
 import api from "../lib/api";
 
@@ -9,9 +10,15 @@ type Props = {
 
 export default function ShareReportModal({ analysisId }: Props) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [expiresInDays, setExpiresInDays] = useState(7);
   const [shareUrl, setShareUrl] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   const create = async () => {
     if (!analysisId) {
@@ -33,37 +40,41 @@ export default function ShareReportModal({ analysisId }: Props) {
       <button className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold" onClick={() => setOpen(true)}>
         Share Report
       </button>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="fixed inset-0 z-[90] grid place-items-center bg-black/55 p-4 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setOpen(false)}
-          >
-            <motion.div
-              className="w-full max-w-xl rounded-2xl border border-slate-300/50 bg-white p-5 shadow-2xl dark:border-slate-700/80 dark:bg-slate-950"
-              initial={{ opacity: 0, y: 18, scale: 0.99 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.99 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h4 className="mb-2 text-lg font-bold">Create Share Link</h4>
-              <label className="mb-2 block text-sm">Expiry (days)</label>
-              <input className="input-field mb-3" type="number" min={1} max={30} value={expiresInDays} onChange={(e) => setExpiresInDays(Number(e.target.value || 7))} />
-              <button className="rounded-lg bg-skyline px-3 py-2 text-sm font-semibold text-white" onClick={create}>Generate Link</button>
-              {error && <p className="mt-3 text-sm text-rose-700 dark:text-rose-300">{error}</p>}
-              {!!shareUrl && (
-                <div className="mt-3 rounded-lg border border-slate-300/60 bg-slate-50 p-3 dark:border-white/20 dark:bg-white/10">
-                  <p className="break-all text-sm">{shareUrl}</p>
-                  <button className="mt-2 rounded-md border border-slate-300/70 bg-white px-2 py-1 text-xs dark:border-white/20 dark:bg-white/10" onClick={() => navigator.clipboard.writeText(shareUrl)}>Copy Link</button>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                className="fixed inset-0 z-[9999] grid place-items-center bg-black/55 p-4 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setOpen(false)}
+              >
+                <motion.div
+                  className="w-full max-w-xl rounded-2xl border border-slate-300/50 bg-white p-5 shadow-2xl dark:border-slate-700/80 dark:bg-slate-950"
+                  initial={{ opacity: 0, y: 18, scale: 0.99 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 12, scale: 0.99 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <h4 className="mb-2 text-lg font-bold">Create Share Link</h4>
+                  <label className="mb-2 block text-sm">Expiry (days)</label>
+                  <input className="input-field mb-3" type="number" min={1} max={30} value={expiresInDays} onChange={(e) => setExpiresInDays(Number(e.target.value || 7))} />
+                  <button className="rounded-lg bg-skyline px-3 py-2 text-sm font-semibold text-white" onClick={create}>Generate Link</button>
+                  {error && <p className="mt-3 text-sm text-rose-700 dark:text-rose-300">{error}</p>}
+                  {!!shareUrl && (
+                    <div className="mt-3 rounded-lg border border-slate-300/60 bg-slate-50 p-3 dark:border-white/20 dark:bg-white/10">
+                      <p className="break-all text-sm">{shareUrl}</p>
+                      <button className="mt-2 rounded-md border border-slate-300/70 bg-white px-2 py-1 text-xs dark:border-white/20 dark:bg-white/10" onClick={() => navigator.clipboard.writeText(shareUrl)}>Copy Link</button>
+                    </div>
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </>
   );
 }
